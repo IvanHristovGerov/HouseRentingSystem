@@ -1,6 +1,6 @@
 ﻿using HouseRentSystem.Core.Contracts;
 using HouseRentSystem.Core.Models.Agent;
-using HouseRentSystem.Extensions;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
