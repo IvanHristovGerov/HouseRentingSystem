@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseRentSystem.Controllers
 {
-    [Authorize]
-    public class HouseController : Controller
+    
+    public class HouseController : BaseController
     {
         [AllowAnonymous]
         [HttpGet]
