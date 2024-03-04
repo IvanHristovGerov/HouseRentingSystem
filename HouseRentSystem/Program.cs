@@ -1,3 +1,5 @@
+using HouseRentSystem.ModelBinders;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //Adding DbContext and Identity methods
@@ -5,7 +7,10 @@ builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+});
 
 //Adding services
 builder.Services.AddApplicationServices();
@@ -20,7 +25,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    
+
     app.UseHsts();
 }
 
