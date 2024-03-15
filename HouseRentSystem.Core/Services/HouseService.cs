@@ -17,7 +17,7 @@ namespace HouseRentSystem.Core.Services
         }
 
 
-
+        //1
         public async Task<IEnumerable<HouseIndexServiceModel>> LastThreeHousesAsync()
         {
             return await repository
@@ -33,6 +33,7 @@ namespace HouseRentSystem.Core.Services
                .ToListAsync();
         }
 
+        //2
         public async Task<IEnumerable<HouseCategoryServiceModel>> AllCategoriesAsync()
         {
             return await repository.AllReadOnly<Category>()
@@ -44,12 +45,14 @@ namespace HouseRentSystem.Core.Services
                 .ToListAsync();
         }
 
+        //3
         public async Task<bool> CategoryExistsAsync(int categoryId)
         {
             return await repository.AllReadOnly<Category>()
                 .AnyAsync(c => c.Id == categoryId);
         }
 
+        //4
         public async Task<int> CreateAsync(HouseFormModel model, int agentId)
         {
             House house = new House()
@@ -68,5 +71,7 @@ namespace HouseRentSystem.Core.Services
 
             return house.Id;
         }
+
+        //5
     }
 }
