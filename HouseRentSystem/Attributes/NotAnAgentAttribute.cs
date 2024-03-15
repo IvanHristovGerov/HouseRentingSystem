@@ -7,7 +7,7 @@ namespace HouseRentSystem.Attributes
 {
     public class NotAnAgentAttribute : ActionFilterAttribute
     {
-     
+
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             base.OnActionExecuted(context);
@@ -20,7 +20,7 @@ namespace HouseRentSystem.Attributes
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
-            if (agentService !=null &&
+            if (agentService != null &&
                 agentService.ExistsByIdAsync(context.HttpContext.User.Id()).Result)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status400BadRequest);
