@@ -9,10 +9,15 @@ namespace HouseRentSystem.Core.Models.House
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(HouseTitleMaxLength, MinimumLength = HouseTitleMinLength, ErrorMessage = LengthMessage)]
         public string Title { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(HouseAddressMaxLength, MinimumLength = HouseAddressMinLength, ErrorMessage = LengthMessage)]
         public string Address { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = RequiredMessage)]
         [DisplayName("Image URL")]
         public string ImageUrl { get; set; } = string.Empty;
 
