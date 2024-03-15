@@ -31,6 +31,8 @@ namespace HouseRentSystem.Core.Services
                 .AnyAsync(a => a.UserId == userId);
         }
 
+
+
         public async Task<bool> UserHasRentsAsync(string userId)
         {
             return await repository.AllReadOnly<House>()
@@ -38,10 +40,16 @@ namespace HouseRentSystem.Core.Services
 
         }
 
-        public async  Task<bool> UserWithPhoneNumberExistsAsync(string phoneNumber)
+        public async Task<bool> UserWithPhoneNumberExistsAsync(string phoneNumber)
         {
             return await repository.AllReadOnly<Agent>()
                 .AnyAsync(a => a.PhoneNumber == phoneNumber);
+        }
+
+        public async Task<int?> GetAgentIdAsync(string userId)
+        {
+            return (await repository.AllReadOnly<Agent>()
+                .FirstOrDefaultAsync(a => a.UserId == userId))?.Id;
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HouseRentSystem.Core.Models.House
+{
+    public class HouseCategoryServiceModel
+
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+    }
+}

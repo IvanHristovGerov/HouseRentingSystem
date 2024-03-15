@@ -1,19 +1,17 @@
-﻿using HouseRentSystem.Core.Contracts;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using HouseRentSystem.Controllers;
+using HouseRentSystem.Core.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
-using HouseRentSystem.Controllers;
 
 namespace HouseRentSystem.Attributes
 {
-    public class MustBeAgentAttribute:ActionFilterAttribute
+    public class MustBeAgentAttribute : ActionFilterAttribute
     {
-
-        public override void OnActionExecuted(ActionExecutedContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            base.OnActionExecuted(context);
+            base.OnActionExecuting(context);
 
-            //IoC
             IAgentService? agentService = context.HttpContext.RequestServices.GetService<IAgentService>();
 
             if (agentService == null)
@@ -21,11 +19,11 @@ namespace HouseRentSystem.Attributes
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
-            if (agentService != null &&
-                agentService.ExistsByIdAsync(context.HttpContext.User.Id()).Result == false)
+            if (agentService != null
+                && agentService.ExistsByIdAsync(context.HttpContext.User.Id()).Result == false)
             {
                 context.Result = new RedirectToActionResult(nameof(AgentController.Become), "Agent", null);
             }
-        }    
+        }
     }
 }
