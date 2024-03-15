@@ -6,7 +6,7 @@ namespace HouseRentSystem.Core.Models.House
 {
     public class AllHousesQueryModel
     {
-        public const int HousesPerPage = 3;
+        public  int HousesPerPage { get; } = 3;
 
         public string Category { get; set; } = string.Empty;
 
