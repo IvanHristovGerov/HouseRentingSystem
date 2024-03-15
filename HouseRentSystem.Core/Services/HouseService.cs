@@ -137,9 +137,12 @@ namespace HouseRentSystem.Core.Services
             };
         }
 
-        public Task<IEnumerable<string>> AllCategoriesNamesAsync()
+        public async Task<IEnumerable<string>> AllCategoriesNamesAsync()
         {
-            throw new NotImplementedException();
+            return await repository.AllReadOnly<Category>()
+                 .Select(c => c.Name)
+                 .Distinct()
+                 .ToListAsync();
         }
 
 
