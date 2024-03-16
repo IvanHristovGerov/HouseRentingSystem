@@ -103,7 +103,7 @@ namespace HouseRentSystem.Core.Services
             housesToShow = sorting switch
             {
                 HouseSorting.Price => housesToShow
-                    .OrderByDescending(h => h.PricePerMonth),
+                    .OrderBy(h => h.PricePerMonth),
                 HouseSorting.NotRentedFirst => housesToShow
                     .OrderBy(h => h.RenterId != null)
                     .ThenByDescending(h => h.Id),
