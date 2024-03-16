@@ -79,7 +79,7 @@ namespace HouseRentSystem.Core.Services
             string? category = null,
             string? searchTerm = null,
             HouseSorting sorting = HouseSorting.Newest,
-            int currentPage = 1, 
+            int currentPage = 1,
             int housesPerPage = 1)
         {
             var housesToShow = repository.AllReadOnly<House>();
@@ -183,7 +183,7 @@ namespace HouseRentSystem.Core.Services
                     Address = h.Address,
                     Agent = new Models.Agent.AgentServiceModel()
                     {
-                        Email= h.Agent.User.Email,
+                        Email = h.Agent.User.Email,
                         PhoneNumber = h.Agent.PhoneNumber
                     },
                     Category = h.Category.Name,
@@ -196,8 +196,51 @@ namespace HouseRentSystem.Core.Services
                 .FirstAsync();
         }
 
-        
+        //8 Edit
+        public async Task EditAsync(int houseId, HouseFormModel model)
+        {
+            var house = await repository.GetByIdAsync<House>(houseId);
 
+            if (house != null)
+            {
+                house.Address = model.Address;
+                house.CategoryId = model.CategoryId;
+                house.Description = model.Description;
+                house.ImageUrl = model.ImageUrl;
+                house.PricePerMonth = model.PricePerMonth;
+                house.Title = model.Title;
 
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> HasAgentWithIdAsync(int houseId, string userId)
+        {
+            return await repository.AllReadOnly<House>()
+                .AnyAsync(h => h.Id == houseId && h.Agent.UserId == userId);
+        }
+
+        public async Task<HouseFormModel?> GetHouseFormModelByIdAsync(int id)
+        {
+            var house = await repository.AllReadOnly<House>()
+                 .Where(h => h.Id == id)
+                 .Select(h => new HouseFormModel()
+                 {
+                     Address = h.Address,
+                     CategoryId = h.CategoryId,
+                     Description = h.Description,
+                     ImageUrl = h.ImageUrl,
+                     PricePerMonth = h.PricePerMonth,
+                     Title = h.Title
+                 })
+                 .FirstOrDefaultAsync();
+
+            if (house != null)
+            {
+                house.Categories = await AllCategoriesAsync();
+            }
+
+            return house;
+        }
     }
 }
