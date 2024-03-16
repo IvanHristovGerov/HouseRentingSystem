@@ -36,6 +36,8 @@ namespace HouseRentSystem.Controllers
             query.TotalHousesCount = model.TotalHousesCount;
             query.Houses = model.Houses;
 
+            query.Categories = await houseService.AllCategoriesNamesAsync();
+
             return View(query);
         }
 
