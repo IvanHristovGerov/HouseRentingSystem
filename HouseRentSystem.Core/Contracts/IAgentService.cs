@@ -17,5 +17,7 @@ namespace HouseRentSystem.Core.Contracts
         Task CreateAsync(string userId, string phoneNumber);
 
         Task<int?> GetAgentIdAsync(string userId);
+
+        
     }
 }
