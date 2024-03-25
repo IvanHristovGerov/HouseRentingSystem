@@ -1,10 +1,12 @@
 using HouseRentSystem.ModelBinders;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Adding DbContext and Identity methods
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
+
 
 
 builder.Services.AddControllersWithViews(options =>

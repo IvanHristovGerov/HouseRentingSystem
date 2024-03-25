@@ -45,6 +45,8 @@ namespace HouseRentSystem.Core.Contracts
 
         Task RentAsync(int houseid, string userId);
 
+        Task LeaveAsync(int houseid, string userId);
+
 
     }
 }
