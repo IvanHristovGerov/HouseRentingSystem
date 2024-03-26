@@ -1,4 +1,5 @@
 using HouseRentSystem.ModelBinders;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddApplicationIdentity(builder.Configuration);
 builder.Services.AddControllersWithViews(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    //To protect from CSRF attacks
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 
 //Adding services
@@ -28,7 +31,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error/500");
-    app.UseStatusCodePagesWithRedirects ("/Home/Error?statusCode={0}");
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
 
     app.UseHsts();
 }
@@ -41,7 +44,18 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
+//new way to protect URL
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name:"House Details",
+        pattern: "/House/Details/{id}/{information}",
+        defaults: new {Controller = "House", Action="Details"}
+        );
+    app.MapDefaultControllerRoute();
+    app.MapRazorPages();
+
+});
+
 
 await app.RunAsync();
